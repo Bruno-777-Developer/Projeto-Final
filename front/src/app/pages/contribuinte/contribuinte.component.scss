@@ -1,0 +1,14 @@
+.posicao{
+  position:absolute;
+  top:20%;
+  margin-top: -70px !important;
+}
+.posicao1{
+ @extend .posicao;
+  left:87%;
+
+}
+.posicao2{
+  @extend .posicao;
+  left:75%;
+}

@@ -1,0 +1,42 @@
+<h2 class="content-block">Notas</h2>
+<div class="content-block dx-card responsive-paddings">
+  <div id="data-grid-demo">
+    <dx-data-grid
+      [showBorders]="true"
+      [dataSource]="lista">
+
+      <dxo-paging [enabled]="false"></dxo-paging>
+      <dxo-editing
+        mode="popup"
+        [allowUpdating]="true"
+        [allowAdding]="true"
+        [allowDeleting]="true">
+
+        <dxo-popup
+          title="Nota"
+          [showTitle]="true"
+          [width]="700"
+          [height]="525"
+          [position]="{ my: 'top', at: 'top'}">
+        </dxo-popup>
+
+
+      </dxo-editing>
+
+      <dxi-column dataField="numero"></dxi-column>
+      <dxi-column dataField="contribuinte.nome"></dxi-column>
+      <dxi-column dataField="data" dataType="date"></dxi-column>
+      <dxi-column dataField="itens" [visible]="false" editCellTemplate="gridEditTemplate"></dxi-column>
+
+      <div *dxTemplate="let data of 'gridEditTemplate'">
+        <dx-data-grid [dataSource]="data">
+          <dxi-column dataField="codigo"></dxi-column>
+          <dxi-column dataField="descricao"></dxi-column>
+          <dxi-column dataField="quantidade"></dxi-column>
+          <dxi-column dataField="valorUnitario"></dxi-column>
+        </dx-data-grid>
+      </div>
+
+    </dx-data-grid>
+  </div>
+</div>

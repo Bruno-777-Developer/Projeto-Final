@@ -1,0 +1,20 @@
+<h2 class="content-block">Home</h2>
+<div class="content-block">
+  <div class="dx-card responsive-paddings">
+
+    <app-estado-cidade
+      widthEstado="200"
+      widthCidade="400"
+      [(nomeEstado)]="estado"
+      (nomeCidade)="getCidade($event)"
+    >
+    </app-estado-cidade>
+    <div>
+      O Estado selecionado foi  <span>{{estado}}</span>
+    </div>
+    <div>
+      A Cidade selecionada foi  <span>{{cidade}}</span>
+    </div>
+
+</div>
+</div>
