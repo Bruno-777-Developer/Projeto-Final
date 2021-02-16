@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {Produtos} from '../../model/produtos';
+import {Produto} from '../../model/produto';
 import {ProdutosService} from "../../shared/services/produtos.service";
 import {Contribuinte} from "../../model/contribuinte";
 
@@ -10,8 +10,8 @@ import {Contribuinte} from "../../model/contribuinte";
 })
 export class ProdutosComponent implements OnInit {
 
-  lista: Produtos [] = [];
-  produto: Produtos;
+  lista: Produto [] = [];
+  produto: Produto;
 
   constructor(private produtosService: ProdutosService) {
   }
@@ -23,7 +23,7 @@ export class ProdutosComponent implements OnInit {
   public buscaProdutos(): void {
     this.lista = [];
     this.produtosService.listar()
-      .subscribe((produto: Produtos[]) => {
+      .subscribe((produto: Produto[]) => {
         this.lista = produto;
         console.log(this.lista);
       });
@@ -31,12 +31,12 @@ export class ProdutosComponent implements OnInit {
   }
 
   public buscaNotaId(id): void {
-    this.produto = null;
+    this.produto = new Produto();
     this.produtosService.listarId(id)
-      .subscribe((produto: Produtos) => {
+      .subscribe((produto: Produto) => {
         this.produto = produto;
         this.buscaProdutos();
-        this.produto = null;
+        this.produto = new Produto();
         console.log(this.lista);
       });
   }
@@ -46,7 +46,7 @@ export class ProdutosComponent implements OnInit {
       .subscribe(d => {
         this.lista.push(produto)
         this.buscaProdutos();
-        this.produto = null;
+        this.produto = new Produto();
         alert("Gravado com Sucesso.");
         console.log(this.lista);
         console.log(produto);
@@ -63,17 +63,17 @@ export class ProdutosComponent implements OnInit {
           }
         });
         this.buscaProdutos();
-        this.produto = null;
+        this.produto = new Produto();
         alert("Atualizado com Sucesso.");
         console.log(this.lista);
       });
   }
 
-  public deletar(produto: Produtos): void {
+  public deletar(produto: Produto): void {
     this.produtosService.deletar(produto)
       .subscribe(() => {
         this.buscaProdutos();
-        this.produto = null;
+        this.produto = new Produto();
         alert("Deletado com Sucesso!");
         console.log(this.lista);
       });
@@ -96,6 +96,6 @@ export class ProdutosComponent implements OnInit {
   }
 
   getDataRow(event: any) {
-    this.produto = event.selectedRowsData[0] as Produtos;
+    this.produto = event.selectedRowsData[0] as Produto;
   }
 }

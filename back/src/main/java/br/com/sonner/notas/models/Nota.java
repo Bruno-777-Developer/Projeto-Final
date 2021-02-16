@@ -35,7 +35,7 @@ public class Nota implements Serializable {
     private Date data;
 
     @OneToMany(mappedBy="nota", fetch=FetchType.LAZY, cascade = CascadeType.ALL)
-    @JsonIgnore
+//    @JsonIgnore
 	private List<NotaItem> itens; // Relação de Um para Muitos. Mapeado a partir da Tabela Nota
     // Em Cascata. Buscar do Tipo Preguiçoso.
 

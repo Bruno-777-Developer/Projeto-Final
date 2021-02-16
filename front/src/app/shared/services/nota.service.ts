@@ -4,7 +4,7 @@ import {Nota} from "../../model/nota";
 import {Contribuinte} from "../../model/contribuinte";
 
 @Injectable({providedIn: 'root'})
-export class NotasService {
+export class NotaService {
 
   constructor(private httpClient: HttpClient) {}
 

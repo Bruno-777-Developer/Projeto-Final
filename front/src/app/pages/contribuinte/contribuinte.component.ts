@@ -26,16 +26,14 @@ export class ContribuinteComponent implements OnInit {
     this.contribuinteService.listar()
       .subscribe((contribuintes: Contribuinte[]) => {
         this.lista = contribuintes;
-        console.log(this.lista);
       });
   }
 
   public buscaContribuinteId(id): void {
-    this.contribuinte = null;
+    this.contribuinte = new Contribuinte();
     this.contribuinteService.listarId(id)
       .subscribe((contribuinte: Contribuinte) => {
         this.contribuinte = contribuinte;
-        console.log(this.contribuinte);
       });
   }
 
@@ -43,7 +41,7 @@ export class ContribuinteComponent implements OnInit {
     this.contribuinteService.criar(contribuinte)
       .subscribe(d => this.lista.push(contribuinte));
     console.log(this.lista);
-    this.contribuinte = null;
+    this.contribuinte = new Contribuinte();
     alert("Gravado com Sucesso");
   }
 
@@ -56,9 +54,8 @@ export class ContribuinteComponent implements OnInit {
             return;
           }
         });
-        this.contribuinte = null;
+        this.contribuinte = new Contribuinte();
         alert("Atualizado com Sucesso");
-        console.log(this.lista);
       });
   }
 
@@ -68,7 +65,7 @@ export class ContribuinteComponent implements OnInit {
       .subscribe(data => {
         console.log(this.lista);
         this.buscaContribuinte();
-        this.contribuinte = null;
+        this.contribuinte = new Contribuinte();
         alert("Deletado com Sucesso");
       });
   }

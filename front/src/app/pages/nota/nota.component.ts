@@ -1,21 +1,23 @@
 import {Component, OnInit} from '@angular/core';
 import {Nota} from '../../model/nota';
-import {NotasService} from "../../shared/services/notas.service";
+import {NotaService} from "../../shared/services/nota.service";
 import {Contribuinte} from "../../model/contribuinte";
-import {Produtos} from "../../model/produtos";
+import {Produto} from "../../model/produto";
+import {NotaItem} from "../../model/notaItem";
 
 @Component({
-  selector: 'app-notas',
-  templateUrl: './notas.component.html',
-  styleUrls: ['./notas.component.scss']
+  selector: 'app-nota',
+  templateUrl: './nota.component.html',
+  styleUrls: ['./nota.component.scss']
 })
-export class NotasComponent implements OnInit {
+export class NotaComponent implements OnInit {
 
-  lista: Nota [] = [];
+  lista: Nota[] = [];
   nota: Nota;
+  notaTypeRef: any = NotaItem;
 
 
-  constructor(private notasService: NotasService) {
+  constructor(private notasService: NotaService) {
   }
 
   ngOnInit(): void {
@@ -70,5 +72,28 @@ export class NotasComponent implements OnInit {
         alert("Deletado com Sucesso!");
         console.log(this.lista);
       });
+  }
+
+  getTypeRef(value: NotaItem[]) {
+/*
+    if(!value){
+      value = new Array<NotaItem>() ;
+      // value.push(new NotaItem())
+    }
+*/
+    return value;
+  }
+
+  novaLinha(e) {
+    debugger;
+
+  }
+
+  verificaDados(value) {
+    return value;
+  }
+
+  pegaValor(event: NotaItem[]) {
+    debugger;
   }
 }

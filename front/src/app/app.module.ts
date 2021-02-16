@@ -12,9 +12,11 @@ import {HomeComponent} from './pages/home/home.component';
 import {ProfileComponent} from './pages/profile/profile.component';
 import {TasksComponent} from './pages/tasks/tasks.component';
 import {EstadoCidadeComponent} from './shared/components/estado-cidade/estado-cidade.component';
-import { NotasComponent } from './pages/notas/notas.component';
 import { ProdutosComponent } from './pages/produtos/produtos.component';
 import { ContribuinteComponent } from './pages/contribuinte/contribuinte.component';
+import {FirstKeysToConsolePipe} from "./shared/core/first.keys.to.console.pipe";
+import {NotaComponent} from "./pages/nota/nota.component";
+import {GridItemComponent} from "./shared/components/grid-item/grid-item.component";
 
 @NgModule({
   declarations: [
@@ -23,9 +25,11 @@ import { ContribuinteComponent } from './pages/contribuinte/contribuinte.compone
     ProfileComponent,
     TasksComponent,
     EstadoCidadeComponent,
-    NotasComponent,
+    NotaComponent,
     ProdutosComponent,
-    ContribuinteComponent
+    ContribuinteComponent,
+    FirstKeysToConsolePipe,
+    GridItemComponent
   ],
   imports: [
     BrowserModule,
@@ -54,9 +58,10 @@ import { ContribuinteComponent } from './pages/contribuinte/contribuinte.compone
     HomeComponent,
     ProfileComponent,
     TasksComponent,
-    NotasComponent,
+    NotaComponent,
     ProdutosComponent,
-    ContribuinteComponent
+    ContribuinteComponent,
+    FirstKeysToConsolePipe
   ],
   bootstrap: [AppComponent]
 })

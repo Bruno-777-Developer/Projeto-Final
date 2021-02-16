@@ -1,12 +1,14 @@
 import {Contribuinte} from './contribuinte';
 import {NotaItem} from "./notaItem";
+import {ObjectLoop} from "../shared/core/object.loop";
 
 export class Nota{
 
   id: number;
-  contribuinte: Contribuinte;
-  descricao: string;
   numero: number;
+  contribuinte: Contribuinte;
   data: Date;
-  itens: NotaItem [];
+  descricao: string;
+  itens: NotaItem[] = [];
+
 }
