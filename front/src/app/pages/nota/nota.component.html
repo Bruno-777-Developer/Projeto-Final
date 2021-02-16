@@ -40,7 +40,7 @@
 
       <div *dxTemplate="let data of 'gridEditTemplate'">
 <!--        {{data | firstKeysToConsole}}-->
-        <grid-item [(dataSource)]="data.value"></grid-item>
+        <grid-item [(dataSource)]="data.value" (dataSourceChange)="pegaValor($event)"></grid-item>
       </div>
 
     </dx-data-grid>

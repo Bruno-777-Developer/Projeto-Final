@@ -92,4 +92,8 @@ export class NotaComponent implements OnInit {
   verificaDados(value) {
     return value;
   }
+
+  pegaValor(event: NotaItem[]) {
+    debugger;
+  }
 }

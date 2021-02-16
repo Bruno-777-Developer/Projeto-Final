@@ -6,7 +6,7 @@ import {NotaItem} from "../../../model/notaItem";
   template: `
     <dx-data-grid width="100%"
                   showBorders="true"
-                  [(dataSource)]="dataSource">
+                  [dataSource]="dataSource" (dataSourceChange)="emiteSaida($event)">
 
       <dxo-editing
         mode="cell"
@@ -43,12 +43,10 @@ export class GridItemComponent implements OnInit {
     return this._dataSource;
   }
 
-/*
   @Output()
   dataSourceChange: EventEmitter<NotaItem[]> = new EventEmitter<NotaItem[]>();
 
   emiteSaida(event: NotaItem[]) {
     this.dataSourceChange.emit(event);
   }
-*/
 }
