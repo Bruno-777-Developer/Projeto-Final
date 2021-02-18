@@ -3,6 +3,7 @@ import {Nota} from '../../model/nota';
 import {NotaService} from "../../shared/services/nota.service";
 import {NotaItem} from "../../model/notaItem";
 import {Produto} from "../../model/produto";
+import {Contribuinte} from "../../model/contribuinte";
 
 @Component({
   selector: 'app-nota',
@@ -48,19 +49,16 @@ export class NotaComponent implements OnInit {
 
   public atualizar(nota): void {
     this.notasService.atualizar(nota)
-      .subscribe(n => {
+      .subscribe(c => {
         this.lista.forEach(item => {
-          if (item.id == n.id) {
-            item = n;
+          if (item.id == c.id) {
+            item = c;
             return;
           }
-        })
-        debugger
-        this.buscaNotas();
+        });
         this.nota = new Nota();
-        console.log(this.lista);
         alert("Atualizado com Sucesso");
-      })
+      });
   }
 
   public deletar(nota: Nota): void {

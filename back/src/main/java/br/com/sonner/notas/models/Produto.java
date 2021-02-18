@@ -22,8 +22,6 @@ public class Produto implements Serializable {
 
     private long codigo;
 
-    private String quantidade;
-
     private String lote;
 
     private Date validade;
@@ -61,14 +59,6 @@ public class Produto implements Serializable {
 
     public void setPreco(BigDecimal preco) {
         this.preco = preco;
-    }
-
-    public String getQuantidade() {
-        return quantidade;
-    }
-
-    public void setQuantidade(String quantidade) {
-        this.quantidade = quantidade;
     }
 
     public String getLote() {
