@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Nota} from '../../model/nota';
 import {NotaService} from "../../shared/services/nota.service";
-import {Contribuinte} from "../../model/contribuinte";
-import {Produto} from "../../model/produto";
 import {NotaItem} from "../../model/notaItem";
+import {Produto} from "../../model/produto";
 
 @Component({
   selector: 'app-nota',
@@ -15,7 +14,6 @@ export class NotaComponent implements OnInit {
   lista: Nota[] = [];
   nota: Nota;
   notaTypeRef: any = NotaItem;
-
 
   constructor(private notasService: NotaService) {
   }
@@ -30,7 +28,6 @@ export class NotaComponent implements OnInit {
       .subscribe((nota: Nota[]) => {
         this.lista = nota;
       });
-
   }
 
   public buscaNotaId(id): void {
@@ -40,7 +37,6 @@ export class NotaComponent implements OnInit {
         this.nota = nota;
         console.log(this.nota);
       });
-
   }
 
   public criar(nota): void {
@@ -58,9 +54,12 @@ export class NotaComponent implements OnInit {
             item = n;
             return;
           }
-          console.log(this.lista);
-          alert("Atualizado com Sucesso");
         })
+        debugger
+        this.buscaNotas();
+        this.nota = new Nota();
+        console.log(this.lista);
+        alert("Atualizado com Sucesso");
       })
   }
 
@@ -68,7 +67,7 @@ export class NotaComponent implements OnInit {
     this.notasService.deletar(nota)
       .subscribe(() => {
         this.buscaNotas();
-        this.nota = null;
+        this.nota = new Nota();
         alert("Deletado com Sucesso!");
         console.log(this.lista);
       });
@@ -86,7 +85,6 @@ export class NotaComponent implements OnInit {
 
   novaLinha(e) {
     debugger;
-
   }
 
   verificaDados(value) {
@@ -96,4 +94,35 @@ export class NotaComponent implements OnInit {
   pegaValor(event: NotaItem[]) {
     debugger;
   }
-}
+
+  public clickGravar(): void {
+    // se contribuinte tem id, do update se nao chama o save e no final dou um refresh na lista
+    // que ta sendo exibida com esse novo contribuindo q foi add
+    if (!this.nota.id) {
+      this.atualizar(this.nota);
+      this.buscaNotas();
+    } else {
+
+      this.criar(this.nota);
+      this.buscaNotas();
+    }
+  }
+
+  getDataRow(event: any) {
+    this.nota = event.selectedRowsData[0] as Nota;
+  }
+
+  clickDeletar(): void {
+    this.deletar(this.nota);
+  }
+
+  clickSalvar(): void {
+    // se contribuinte tem id, do update se nao chama o save e no final dou um refresh na lista
+    // que ta sendo exibida com esse novo contribuindo q foi add
+
+      this.atualizar(this.nota);
+
+
+    }
+  }
+

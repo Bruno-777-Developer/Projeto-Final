@@ -21,7 +21,12 @@ export class NotaService {
   }
 
   public atualizar(nota) {
-    return this.httpClient.put<Nota>('/api/nota/', nota);
+    const httpOptions: any = {
+      headers: { 'Content-Type': 'application/json'}
+    };
+    httpOptions.body = nota;
+
+    return this.httpClient.put<Nota>('/api/nota/', httpOptions);
   }
 
   public deletar(nota: Nota) {

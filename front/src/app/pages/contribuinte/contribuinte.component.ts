@@ -1,7 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Contribuinte} from '../../model/contribuinte';
 import {ContribuinteService} from "../../shared/services/contribuinte.service";
-import component from "devextreme/core/component";
 
 @Component({
   selector: 'app-contribuinte',
@@ -60,7 +59,6 @@ export class ContribuinteComponent implements OnInit {
   }
 
   public deletar(contribuinte: Contribuinte): void {
-
     this.contribuinteService.deletar(contribuinte)
       .subscribe(data => {
         console.log(this.lista);
@@ -81,7 +79,6 @@ export class ContribuinteComponent implements OnInit {
       this.atualizar(this.contribuinte);
       this.buscaContribuinte();
     }
-
   }
 
   getDataRow(event: any) {
@@ -92,4 +89,3 @@ export class ContribuinteComponent implements OnInit {
     this.deletar(this.contribuinte);
   }
 }
-
