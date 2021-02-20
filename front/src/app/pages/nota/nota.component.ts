@@ -1,9 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Nota} from '../../model/nota';
 import {NotaService} from "../../shared/services/nota.service";
-import {Contribuinte} from "../../model/contribuinte";
-import {Produto} from "../../model/produto";
 import {NotaItem} from "../../model/notaItem";
+import * as _ from 'lodash';
 
 @Component({
   selector: 'app-nota',
@@ -13,11 +12,12 @@ import {NotaItem} from "../../model/notaItem";
 export class NotaComponent implements OnInit {
 
   lista: Nota[] = [];
-  nota: Nota;
+  nota: Nota = new Nota();
   notaTypeRef: any = NotaItem;
 
 
   constructor(private notasService: NotaService) {
+    this.initNewRow = this.initNewRow.bind(this);
   }
 
   ngOnInit(): void {
@@ -74,26 +74,8 @@ export class NotaComponent implements OnInit {
       });
   }
 
-  getTypeRef(value: NotaItem[]) {
-/*
-    if(!value){
-      value = new Array<NotaItem>() ;
-      // value.push(new NotaItem())
-    }
-*/
-    return value;
-  }
 
-  novaLinha(e) {
-    debugger;
-
-  }
-
-  verificaDados(value) {
-    return value;
-  }
-
-  pegaValor(event: NotaItem[]) {
-    debugger;
+  initNewRow(event: any) {
+    event.data = new Nota();
   }
 }

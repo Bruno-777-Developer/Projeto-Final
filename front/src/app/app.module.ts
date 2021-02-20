@@ -16,7 +16,6 @@ import { ProdutosComponent } from './pages/produtos/produtos.component';
 import { ContribuinteComponent } from './pages/contribuinte/contribuinte.component';
 import {FirstKeysToConsolePipe} from "./shared/core/first.keys.to.console.pipe";
 import {NotaComponent} from "./pages/nota/nota.component";
-import {GridItemComponent} from "./shared/components/grid-item/grid-item.component";
 
 @NgModule({
   declarations: [
@@ -28,8 +27,7 @@ import {GridItemComponent} from "./shared/components/grid-item/grid-item.compone
     NotaComponent,
     ProdutosComponent,
     ContribuinteComponent,
-    FirstKeysToConsolePipe,
-    GridItemComponent
+    FirstKeysToConsolePipe
   ],
   imports: [
     BrowserModule,
