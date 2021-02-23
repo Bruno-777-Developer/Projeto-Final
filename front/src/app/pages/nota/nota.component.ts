@@ -4,6 +4,7 @@ import {NotaService} from "../../shared/services/nota.service";
 import {NotaItem} from "../../model/notaItem";
 import {Produto} from "../../model/produto";
 import {Contribuinte} from "../../model/contribuinte";
+import {ContribuinteService} from "../../shared/services/contribuinte.service";
 
 @Component({
   selector: 'app-nota',
@@ -11,16 +12,30 @@ import {Contribuinte} from "../../model/contribuinte";
   styleUrls: ['./nota.component.scss']
 })
 export class NotaComponent implements OnInit {
-
+  listaContribuinte: Contribuinte[] = [];
   lista: Nota[] = [];
   nota: Nota;
   notaTypeRef: any = NotaItem;
 
-  constructor(private notasService: NotaService) {
+  constructor( private notasService: NotaService,
+               private contribuinteService: ContribuinteService) {
   }
 
   ngOnInit(): void {
+    this.buscaContribuinte();
     this.buscaNotas();
+    this.contribuinteService.listar().subscribe(lista =>{
+      this.listaContribuinte = lista;
+    });
+
+  }
+
+  public buscaContribuinte(): void {
+    this.listaContribuinte = [];
+    this.contribuinteService.listar()
+      .subscribe((contribuintes: Contribuinte[]) => {
+        this.listaContribuinte = contribuintes;
+      });
   }
 
   public buscaNotas(): void {
@@ -114,12 +129,16 @@ export class NotaComponent implements OnInit {
     this.deletar(this.nota);
   }
 
-  clickSalvar(): void {
-    // se contribuinte tem id, do update se nao chama o save e no final dou um refresh na lista
-    // que ta sendo exibida com esse novo contribuindo q foi add
+  clickSalvar(event: any): void {
+    if(((event.changes)&&(event.changes.length))>0) {
+      this.nota = event.changes[0].data;
+      this.nota.descricao = event.changes[0].descricao;
+      console.log(this.nota.descricao);
+      // se contribuinte tem id, do update se nao chama o save e no final dou um refresh na lista
+      // que ta sendo exibida com esse novo contribuindo q foi add
 
       this.atualizar(this.nota);
-
+    }
 
     }
   }

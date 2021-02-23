@@ -1,10 +1,17 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {Contribuinte} from '../../model/contribuinte';
+import * as EventEmitter from "events";
+
+
 
 
 @Injectable({providedIn: 'root'})
 export class ContribuinteService {
+
+
+
+  static emiteContribuinte = new EventEmitter<Contribuinte[]>();
 
   constructor(private httpClient: HttpClient) {}
 

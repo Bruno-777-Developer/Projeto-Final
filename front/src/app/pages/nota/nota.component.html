@@ -1,12 +1,6 @@
 <h2 class="content-block">Notas</h2>
 <div class="content-block dx-card responsive-paddings">
-  <dx-button (onClick)="clickSalvar()"
-             text="Salvar"
-             modal-transclude="90"
-             height="50"
-             type="success"
-             [useSubmitBehavior]="true">
-  </dx-button>
+
   <div id="data-grid-demo">
 
     <dx-data-grid
@@ -28,23 +22,35 @@
         </dxo-popup>
 
         <dxo-form>
+
           <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
             <dxi-item dataField="numero"></dxi-item>
-            <dxi-item dataField="contribuinte.nome"></dxi-item>
+            <dxi-item dataField="contribuinte"></dxi-item>
             <dxi-item dataField="data"></dxi-item>
             <dxi-item dataField="descricao"></dxi-item>
             <dxi-item dataField="itens" [colSpan]="2"></dxi-item>
           </dxi-item>
         </dxo-form>
-
+        <dxo-form>
+          <dx-select-box
+            [dataSource]="listaContribuinte"
+          > </dx-select-box>
+        </dxo-form>
       </dxo-editing>
 
       <dxi-column dataField="numero"></dxi-column>
-      <dxi-column dataField="contribuinte.nome"></dxi-column>
+      <dxi-column dataField="contribuinte" cellTemplate="contribuinteCellTemplate" editCellTemplate="contribuinteEditCellTemplate"></dxi-column>
       <dxi-column dataField="data" dataType="date"></dxi-column>
       <dxi-column dataField="descricao" dataType="string"></dxi-column>
       <dxi-column dataField="itens" [visible]="false" editCellTemplate="gridEditTemplate"></dxi-column>
 
+      <div *dxTemplate="let data of 'contribuinteCellTemplate'">{{data.value ? data.value.nome : ""}}</div>
+      <div *dxTemplate="let data of 'contribuinteEditCellTemplate'">
+        {{data | firstKeysToConsole}}
+        <dx-select-box [(items)]="listaContribuinte"
+                       [(selectedItem)]="data.data.contribuinte"
+                       displayExpr="nome"></dx-select-box>
+      </div>
       <div *dxTemplate="let data of 'gridEditTemplate'">
 <!--        {{data | firstKeysToConsole}}-->
         <grid-item [(dataSource)]="data.value" (dataSourceChange)="pegaValor($event)"></grid-item>

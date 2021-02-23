@@ -13,6 +13,7 @@ export class ContribuinteComponent implements OnInit {
   lista: Contribuinte[] = [];
   contribuinte: Contribuinte;
 
+
   constructor(private contribuinteService: ContribuinteService) {
   }
 
