@@ -71,7 +71,7 @@ export class ContribuinteComponent implements OnInit {
   }
 
   public clickGravar(): void {
-    // se contribuinte tem id, do update se nao chama o save e no final dou um refresh na lista
+    // se contribuinte tem id, do update se nao chama o save e no final dou um refresh na listaNotas
     // que ta sendo exibida com esse novo contribuindo q foi add
     if ((this.contribuinte.id == null)) {
 

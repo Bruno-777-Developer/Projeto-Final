@@ -2,9 +2,20 @@
 <div class="content-block dx-card responsive-paddings">
   <div id="data-grid-demo">
 
-    <dx-data-grid
-      [showBorders]="true"
-      [dataSource]="lista" (onInitNewRow)="initNewRow($event)">
+    <dx-load-panel
+      [position]="{ of: '#notaGrid' }"
+      [visible]="isLoading">
+    </dx-load-panel>
+
+
+    <dx-data-grid #notaGrid
+                  [showBorders]="true"
+                  [(dataSource)]="listaNotas"
+                  keyExpr="id"
+                  (onInitNewRow)="notaOnInitNewRow($event)"
+                  (onEditingStart)="notaOnEditingStart($event)"
+                  (onSaving)="notaOnSaving($event)"
+                  (onSaved)="notaOnSaved($event)">
 
       <dxo-paging [enabled]="false"></dxo-paging>
       <dxo-editing
@@ -23,7 +34,7 @@
         <dxo-form>
           <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
             <dxi-item dataField="numero"></dxi-item>
-            <dxi-item dataField="contribuinte.nome"></dxi-item>
+            <dxi-item dataField="contribuinte"></dxi-item>
             <dxi-item dataField="data"></dxi-item>
             <dxi-item dataField="descricao"></dxi-item>
             <dxi-item dataField="itens" [colSpan]="2"></dxi-item>
@@ -33,16 +44,19 @@
       </dxo-editing>
 
       <dxi-column dataField="numero"></dxi-column>
-      <dxi-column dataField="contribuinte.nome"></dxi-column>
+      <dxi-column dataField="contribuinte" cellTemplate="contribuinteCellTemplate" editCellTemplate="contribuinteEditCellTemplate"></dxi-column>
       <dxi-column dataField="data" dataType="date"></dxi-column>
       <dxi-column dataField="descricao" dataType="string"></dxi-column>
       <dxi-column dataField="itens" [visible]="false" editCellTemplate="gridEditTemplate"></dxi-column>
 
+
       <div *dxTemplate="let data of 'gridEditTemplate'">
-<!--        {{data | firstKeysToConsole}}-->
-        <dx-data-grid width="100%"
+        <!--        {{data | firstKeysToConsole}}-->
+        <dx-data-grid #itemGrid
+                      width="100%"
                       showBorders="true"
-                      [(dataSource)]="data.value" >
+                      [dataSource]="listaItens"
+                      (onSaved)="itemOnSaved($event)">
 
           <dxo-editing
             mode="cell"
@@ -59,6 +73,21 @@
         </dx-data-grid>
       </div>
 
+      <div *dxTemplate="let data of 'contribuinteCellTemplate'">
+        {{data.value && data.value.nome ? data.value.nome : ""}}
+      </div>
+
+      <div *dxTemplate="let data of 'contribuinteEditCellTemplate'">
+        <dx-select-box [(items)]="listaContribuinte"
+                       [value]="data.value?.id"
+                       valueExpr="id"
+                       (onValueChanged)="itemOnValueChanged($event, data)"
+                       (onSelectionChanged)="data.component.updateDimensions()"
+                       displayExpr="nome">
+        </dx-select-box>
+      </div>
+
     </dx-data-grid>
   </div>
+
 </div>

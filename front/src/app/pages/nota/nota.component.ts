@@ -1,8 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ContentChild, OnInit, ViewChild} from '@angular/core';
 import {Nota} from '../../model/nota';
 import {NotaService} from "../../shared/services/nota.service";
 import {NotaItem} from "../../model/notaItem";
 import * as _ from 'lodash';
+import {DxDataGridComponent} from "devextreme-angular";
+import DevExpress from "devextreme";
+import ArrayStore = DevExpress.data.ArrayStore;
+import {ContribuinteService} from "../../shared/services/contribuinte.service";
+import {Contribuinte} from "../../model/contribuinte";
 
 @Component({
   selector: 'app-nota',
@@ -11,28 +16,50 @@ import * as _ from 'lodash';
 })
 export class NotaComponent implements OnInit {
 
-  lista: Nota[] = [];
-  nota: Nota = new Nota();
-  notaTypeRef: any = NotaItem;
+  listaContribuinte: Contribuinte[] = [];
+  listaNotas: Nota[] = [];
+  listaItens: NotaItem[] = [];
+  // nota: Nota = new Nota();
+  // notaTypeRef: any = NotaItem;
+  changeItens: boolean = false;
+  changeNota: Nota;
 
 
-  constructor(private notasService: NotaService) {
-    this.initNewRow = this.initNewRow.bind(this);
+  isLoading: boolean = false;
+
+  constructor(private notasService: NotaService,
+              private contribuinteService: ContribuinteService) {
+    this.notaOnInitNewRow = this.notaOnInitNewRow.bind(this);
+    this.notaOnEditingStart = this.notaOnEditingStart.bind(this);
+    this.notaOnSaving = this.notaOnSaving.bind(this);
+    this.itemOnSaved = this.itemOnSaved.bind(this);
+    this.itemOnValueChanged = this.itemOnValueChanged.bind(this);
   }
 
   ngOnInit(): void {
     this.buscaNotas();
+    this.buscaContribuintes();
   }
 
-  public buscaNotas(): void {
-    this.lista = [];
-    this.notasService.listar()
-      .subscribe((nota: Nota[]) => {
-        this.lista = nota;
+  public buscaContribuintes(): void {
+    this.listaContribuinte = [];
+    this.contribuinteService.listar()
+      .subscribe((contribuintes: Contribuinte[]) => {
+        this.listaContribuinte = contribuintes;
       });
 
   }
 
+  public buscaNotas(): void {
+    this.listaNotas = [];
+    this.notasService.listar()
+      .subscribe((nota: Nota[]) => {
+        this.listaNotas = nota;
+      });
+
+  }
+
+/*
   public buscaNotaId(id): void {
     this.nota = null;
     this.notasService.listarId(id)
@@ -42,40 +69,92 @@ export class NotaComponent implements OnInit {
       });
 
   }
+*/
 
   public criar(nota): void {
     this.notasService.criar(nota)
-      .subscribe(d => this.lista.push(nota));
-    console.log(this.lista);
+      .subscribe(d => this.listaNotas.push(nota));
+    console.log(this.listaNotas);
     alert("Gravado com Sucesso");
   }
 
   public atualizar(nota): void {
     this.notasService.atualizar(nota)
       .subscribe(n => {
-        this.lista.forEach(item => {
-          if (item.id == n.id) {
-            item = n;
-            return;
-          }
-          console.log(this.lista);
-          alert("Atualizado com Sucesso");
-        })
+        alert("Atualizado com Sucesso");
       })
   }
 
+/*
   public deletar(nota: Nota): void {
     this.notasService.deletar(nota)
       .subscribe(() => {
         this.buscaNotas();
         this.nota = null;
         alert("Deletado com Sucesso!");
-        console.log(this.lista);
+        console.log(this.listaNotas);
       });
   }
+*/
 
 
-  initNewRow(event: any) {
+
+
+  notaOnInitNewRow(event: any) {
     event.data = new Nota();
+    this.changeItens = false;
+    this.listaItens = [];
   }
+
+  notaOnEditingStart(event: any) {
+    this.changeNota = event.data;
+    this.listaItens = [];
+    if(event.data.itens && event.data.itens.length){
+      event.data.itens.forEach(item => {
+        this.listaItens.push(Object.assign({}, item));
+      });
+    }
+    this.changeItens = false;
+  }
+
+  notaOnSaving(event: any) {
+    setTimeout(() => {
+      if(this.changeItens && !event.changes.length && this.changeNota?.id){
+        let nota: Nota = this.changeNota;
+        nota.itens = this.listaItens;
+        let change: Change<Nota> = new Change();
+        change.type = 'update';
+        change.key = this.changeNota.id;
+        change.data = nota
+        event.changes.push(change);
+
+        event.setValue(this.changeNota);
+      }
+      else if(this.changeItens && event.changes.length){
+        event.changes[0].data.itens = this.listaItens;
+      }
+      event.component.updateDimensions();
+
+    }, 100);
+  }
+
+  notaOnSaved(event: any) {
+    setTimeout(() => {
+      // debugger;
+    }, 110);
+  }
+
+  itemOnSaved(event) {
+    this.changeItens = true;
+  }
+
+  itemOnValueChanged(event, data) {
+    data.setValue(this.listaContribuinte.find(item => item.id==event.value));
+  }
+}
+
+export class Change<T> {
+  type: "insert" | "update" | "remove";
+  key: any;
+  data: Object;
 }

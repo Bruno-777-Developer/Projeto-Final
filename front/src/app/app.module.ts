@@ -7,7 +7,15 @@ import {AppInfoService, AuthService, ScreenService} from './shared/services';
 import {UnauthenticatedContentModule} from './unauthenticated-content';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
-import {DxButtonModule, DxDataGridModule, DxFormModule, DxSelectBoxModule, DxTextAreaModule, DxTextBoxModule} from 'devextreme-angular';
+import {
+  DxButtonModule,
+  DxDataGridModule,
+  DxFormModule,
+  DxLoadPanelModule,
+  DxSelectBoxModule,
+  DxTextAreaModule,
+  DxTextBoxModule
+} from 'devextreme-angular';
 import {HomeComponent} from './pages/home/home.component';
 import {ProfileComponent} from './pages/profile/profile.component';
 import {TasksComponent} from './pages/tasks/tasks.component';
@@ -44,7 +52,8 @@ import {NotaComponent} from "./pages/nota/nota.component";
     DxFormModule,
     DxButtonModule,
     DxTextBoxModule,
-    DxTextAreaModule
+    DxTextAreaModule,
+    DxLoadPanelModule
   ],
   providers: [
     AuthService,
