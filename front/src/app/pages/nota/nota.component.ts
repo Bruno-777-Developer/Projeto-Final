@@ -1,10 +1,13 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, ContentChild, OnInit, ViewChild} from '@angular/core';
 import {Nota} from '../../model/nota';
 import {NotaService} from "../../shared/services/nota.service";
 import {NotaItem} from "../../model/notaItem";
-import {Produto} from "../../model/produto";
-import {Contribuinte} from "../../model/contribuinte";
+import * as _ from 'lodash';
+import {DxDataGridComponent} from "devextreme-angular";
+import DevExpress from "devextreme";
+import ArrayStore = DevExpress.data.ArrayStore;
 import {ContribuinteService} from "../../shared/services/contribuinte.service";
+import {Contribuinte} from "../../model/contribuinte";
 
 @Component({
   selector: 'app-nota',
@@ -12,40 +15,51 @@ import {ContribuinteService} from "../../shared/services/contribuinte.service";
   styleUrls: ['./nota.component.scss']
 })
 export class NotaComponent implements OnInit {
-  listaContribuinte: Contribuinte[] = [];
-  lista: Nota[] = [];
-  nota: Nota;
-  notaTypeRef: any = NotaItem;
 
-  constructor( private notasService: NotaService,
-               private contribuinteService: ContribuinteService) {
+  listaContribuinte: Contribuinte[] = [];
+  listaNotas: Nota[] = [];
+  listaItens: NotaItem[] = [];
+  // nota: Nota = new Nota();
+  // notaTypeRef: any = NotaItem;
+  changeItens: boolean = false;
+  changeNota: Nota;
+
+
+  isLoading: boolean = false;
+
+  constructor(private notasService: NotaService,
+              private contribuinteService: ContribuinteService) {
+    this.notaOnInitNewRow = this.notaOnInitNewRow.bind(this);
+    this.notaOnEditingStart = this.notaOnEditingStart.bind(this);
+    this.notaOnSaving = this.notaOnSaving.bind(this);
+    this.itemOnSaved = this.itemOnSaved.bind(this);
+    this.itemOnValueChanged = this.itemOnValueChanged.bind(this);
   }
 
   ngOnInit(): void {
-    this.buscaContribuinte();
     this.buscaNotas();
-    this.contribuinteService.listar().subscribe(lista =>{
-      this.listaContribuinte = lista;
-    });
-
+    this.buscaContribuintes();
   }
 
-  public buscaContribuinte(): void {
+  public buscaContribuintes(): void {
     this.listaContribuinte = [];
     this.contribuinteService.listar()
       .subscribe((contribuintes: Contribuinte[]) => {
         this.listaContribuinte = contribuintes;
       });
+
   }
 
   public buscaNotas(): void {
-    this.lista = [];
+    this.listaNotas = [];
     this.notasService.listar()
       .subscribe((nota: Nota[]) => {
-        this.lista = nota;
+        this.listaNotas = nota;
       });
+
   }
 
+/*
   public buscaNotaId(id): void {
     this.nota = null;
     this.notasService.listarId(id)
@@ -53,93 +67,94 @@ export class NotaComponent implements OnInit {
         this.nota = nota;
         console.log(this.nota);
       });
+
   }
+*/
 
   public criar(nota): void {
     this.notasService.criar(nota)
-      .subscribe(d => this.lista.push(nota));
-    console.log(this.lista);
+      .subscribe(d => this.listaNotas.push(nota));
+    console.log(this.listaNotas);
     alert("Gravado com Sucesso");
   }
 
   public atualizar(nota): void {
     this.notasService.atualizar(nota)
-      .subscribe(c => {
-        this.lista.forEach(item => {
-          if (item.id == c.id) {
-            item = c;
-            return;
-          }
-        });
-        this.nota = new Nota();
+      .subscribe(n => {
         alert("Atualizado com Sucesso");
-      });
+      })
   }
 
+/*
   public deletar(nota: Nota): void {
     this.notasService.deletar(nota)
       .subscribe(() => {
         this.buscaNotas();
-        this.nota = new Nota();
+        this.nota = null;
         alert("Deletado com Sucesso!");
-        console.log(this.lista);
+        console.log(this.listaNotas);
       });
   }
-
-  getTypeRef(value: NotaItem[]) {
-/*
-    if(!value){
-      value = new Array<NotaItem>() ;
-      // value.push(new NotaItem())
-    }
 */
-    return value;
+
+
+
+
+  notaOnInitNewRow(event: any) {
+    event.data = new Nota();
+    this.changeItens = false;
+    this.listaItens = [];
   }
 
-  novaLinha(e) {
-    debugger;
-  }
-
-  verificaDados(value) {
-    return value;
-  }
-
-  pegaValor(event: NotaItem[]) {
-    debugger;
-  }
-
-  public clickGravar(): void {
-    // se contribuinte tem id, do update se nao chama o save e no final dou um refresh na lista
-    // que ta sendo exibida com esse novo contribuindo q foi add
-    if (!this.nota.id) {
-      this.atualizar(this.nota);
-      this.buscaNotas();
-    } else {
-
-      this.criar(this.nota);
-      this.buscaNotas();
+  notaOnEditingStart(event: any) {
+    this.changeNota = event.data;
+    this.listaItens = [];
+    if(event.data.itens && event.data.itens.length){
+      event.data.itens.forEach(item => {
+        this.listaItens.push(Object.assign({}, item));
+      });
     }
+    this.changeItens = false;
   }
 
-  getDataRow(event: any) {
-    this.nota = event.selectedRowsData[0] as Nota;
+  notaOnSaving(event: any) {
+    setTimeout(() => {
+      if(this.changeItens && !event.changes.length && this.changeNota?.id){
+        let nota: Nota = this.changeNota;
+        nota.itens = this.listaItens;
+        let change: Change<Nota> = new Change();
+        change.type = 'update';
+        change.key = this.changeNota.id;
+        change.data = nota
+        event.changes.push(change);
+
+        event.setValue(this.changeNota);
+      }
+      else if(this.changeItens && event.changes.length){
+        event.changes[0].data.itens = this.listaItens;
+      }
+      event.component.updateDimensions();
+
+    }, 100);
   }
 
-  clickDeletar(): void {
-    this.deletar(this.nota);
+  notaOnSaved(event: any) {
+    setTimeout(() => {
+      // debugger;
+    }, 110);
   }
 
-  clickSalvar(event: any): void {
-    if(((event.changes)&&(event.changes.length))>0) {
-      this.nota = event.changes[0].data;
-      this.nota.descricao = event.changes[0].descricao;
-      console.log(this.nota.descricao);
-      // se contribuinte tem id, do update se nao chama o save e no final dou um refresh na lista
-      // que ta sendo exibida com esse novo contribuindo q foi add
-
-      this.atualizar(this.nota);
-    }
-
-    }
+  itemOnSaved(event) {
+    this.changeItens = true;
   }
 
+  itemOnValueChanged(event, data) {
+    data.setValue(this.listaContribuinte.find(item => item.id==event.value));
+  }
+}
+
+export class Change<T> {
+  type: "insert" | "update" | "remove";
+  key: any;
+  data: Object;
+}

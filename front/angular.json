@@ -59,7 +59,8 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "devextreme",
-              "devextreme-angular"
+              "devextreme-angular",
+              "lodash"
             ]
           },
           "configurations": {
