@@ -8,32 +8,32 @@ import java.io.Serializable;
 
     @Entity
     @Table(name = "contribuinte")
-    //@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     public class Contribuinte implements Serializable {
 
         private static final long serialVersionUID = 1L;
 
         @Id // Anotação Id
         @GeneratedValue(strategy= GenerationType.IDENTITY)
-        private long id; // Toda Anotação tem que estar próxima do objeto.
+        private Long id; // Toda Anotação tem que estar próxima do objeto.
 
-        private long codigo;
+        private Long codigo;
 
         private String nome;
 
-        public long getId() {
+        public Long getId() {
             return id;
         }
 
-        public void setId(long id) {
+        public void setId(Long id) {
             this.id = id;
         }
 
-        public long getCodigo() {
+        public Long getCodigo() {
             return codigo;
         }
 
-        public void setCodigo(long codigo) {
+        public void setCodigo(Long codigo) {
             this.codigo = codigo;
         }
 

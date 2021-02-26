@@ -13,21 +13,21 @@ import java.util.List;
 
 @Entity
 @Table(name = "nota")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Nota implements Serializable {
 
-    private static final long serialVersionUID = 1L;
+    private static final Long serialVersionUID = 1L;
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @ManyToOne // Relação de Muito para Um.
     @JoinColumn(name = "contribuinte") // Nome da tabela relacionada
-    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Contribuinte contribuinte; // Classe e o Objeto sempre próximos da Anotação
 
-    private long numero;
+    private Long numero;
 
     private String descricao;
 
@@ -44,7 +44,7 @@ public class Nota implements Serializable {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -56,11 +56,11 @@ public class Nota implements Serializable {
         this.contribuinte = contribuinte;
     }
 
-    public long getNumero() {
+    public Long getNumero() {
         return numero;
     }
 
-    public void setNumero(long numero) {
+    public void setNumero(Long numero) {
         this.numero = numero;
     }
 

@@ -1,13 +1,10 @@
-import {Component, ContentChild, OnInit, ViewChild} from '@angular/core';
-import {Nota} from '../../model/nota';
-import {NotaService} from "../../shared/services/nota.service";
-import {NotaItem} from "../../model/notaItem";
-import * as _ from 'lodash';
-import {DxDataGridComponent} from "devextreme-angular";
-import DevExpress from "devextreme";
-import ArrayStore = DevExpress.data.ArrayStore;
-import {ContribuinteService} from "../../shared/services/contribuinte.service";
+import {Component, OnInit} from "@angular/core";
 import {Contribuinte} from "../../model/contribuinte";
+import {Nota} from "../../model/nota";
+import {NotaItem} from "../../model/notaItem";
+import {NotaService} from "../../shared/services/nota.service";
+import {ContribuinteService} from "../../shared/services/contribuinte.service";
+
 
 @Component({
   selector: 'app-nota',
@@ -21,11 +18,11 @@ export class NotaComponent implements OnInit {
   listaItens: NotaItem[] = [];
   // nota: Nota = new Nota();
   // notaTypeRef: any = NotaItem;
-  changeItens: boolean = false;
+  changeItens = false;
   changeNota: Nota;
 
 
-  isLoading: boolean = false;
+  isLoading = false;
 
   constructor(private notasService: NotaService,
               private contribuinteService: ContribuinteService) {
@@ -75,14 +72,13 @@ export class NotaComponent implements OnInit {
     this.notasService.criar(nota)
       .subscribe(d => this.listaNotas.push(nota));
     console.log(this.listaNotas);
-    alert("Gravado com Sucesso");
   }
 
   public atualizar(nota): void {
     this.notasService.atualizar(nota)
       .subscribe(n => {
-        alert("Atualizado com Sucesso");
-      })
+
+      });
   }
 
 /*
@@ -97,13 +93,9 @@ export class NotaComponent implements OnInit {
   }
 */
 
-
-
-
   notaOnInitNewRow(event: any) {
     event.data = new Nota();
     this.changeItens = false;
-    this.listaItens = [];
   }
 
   notaOnEditingStart(event: any) {
@@ -119,27 +111,29 @@ export class NotaComponent implements OnInit {
 
   notaOnSaving(event: any) {
     setTimeout(() => {
-      if(this.changeItens && !event.changes.length && this.changeNota?.id){
-        let nota: Nota = this.changeNota;
-        nota.itens = this.listaItens;
-        let change: Change<Nota> = new Change();
-        change.type = 'update';
-        change.key = this.changeNota.id;
-        change.data = nota
-        event.changes.push(change);
-
-        event.setValue(this.changeNota);
-      }
-      else if(this.changeItens && event.changes.length){
-        event.changes[0].data.itens = this.listaItens;
-      }
+        if(this.changeItens && !event.changes.length && this.changeNota?.id) {
+          const nota: Nota = this.changeNota;
+          nota.itens = this.listaItens;
+          const change: Change<Nota> = new Change();
+          change.type = 'update';
+          change.key = this.changeNota.id;
+          change.data = nota;
+          event.changes.push(change);
+          event.setValue(this.changeNota);
+        }
+          else if(this.changeItens && event.changes.length){
+            event.changes[0].data.itens = this.listaItens;
+          }
       event.component.updateDimensions();
-
     }, 100);
   }
 
   notaOnSaved(event: any) {
     setTimeout(() => {
+      this.changeNota = event.changes[0].data;
+      this.notasService.merge(this.changeNota)
+        .subscribe( retorno => {
+        });
       // debugger;
     }, 110);
   }
@@ -149,7 +143,7 @@ export class NotaComponent implements OnInit {
   }
 
   itemOnValueChanged(event, data) {
-    data.setValue(this.listaContribuinte.find(item => item.id==event.value));
+    data.setValue(this.listaContribuinte.find(item => item.id === event.value));
   }
 }
 

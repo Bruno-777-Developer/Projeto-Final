@@ -3,15 +3,31 @@
 
   <dx-form [(formData)]="produto">
 
-    <dxi-item dataField="id" editorType="dxTextBox" [editorOptions]="{width: 80, readOnly: true}"></dxi-item>
-    <dxi-item dataField="codigo" [label]="{text: 'Codigo'}" [editorOptions]="{width: 100}"></dxi-item>
+    <dxi-item dataField="id" editorType="dxTextBox"
+              [editorOptions]="{width: 80, readOnly: true}">
+    </dxi-item>
+
+    <dxi-item dataField="codigo"
+              [label]="{text: 'Codigo'}"
+              [editorOptions]="{width: 100}">
+    </dxi-item>
+
     <dxi-item dataField="nome" template="nomeTemplate"></dxi-item>
+
+    <div *dxTemplate="let data of 'nomeTemplate'">
+      <dx-text-box [(value)]="data.component.option('formData')[data.dataField]"
+                   width="400">
+      </dx-text-box>
+    </div>
 
     <div *dxTemplate="let data of 'nomeTemplate'"> <dx-text-box [(value)]="data.component.option('formData')[data.dataField]" width="400"></dx-text-box></div>
     <dxi-item dataField="validade" dataType="date" editorType="dxDateBox" [editorOptions]="{width: 200}"></dxi-item>
 
     <dxi-item dataField="fabricacao" dataType="date" editorType="dxDateBox" [editorOptions]="{width: 200}"></dxi-item>
     <dxi-item dataField="tipo" editorType="dxTextBox" [editorOptions]="{width: 400}"></dxi-item>
+
+
+
     <dxi-item dataField="lote" editorType="dxTextBox" [editorOptions]="{width: 400}"></dxi-item>
     <dxi-item dataField="preco" editorType="dxTextBox" [editorOptions]="{width: 100}"></dxi-item>
 

@@ -2,6 +2,7 @@ package br.com.sonner.notas.resources;
 
 import br.com.sonner.notas.models.Nota;
 import br.com.sonner.notas.repository.NotaRepository;
+import org.hibernate.exception.GenericJDBCException;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
@@ -31,9 +32,10 @@ public class NotaResources {
     public Nota salvaNota(@RequestBody Nota cadastronota) {
         return notaRepository.save(cadastronota);// Retorna uma nota cadastrada que foi salva
     }
-
+//    @ExceptionHandler(GenericJDBCException.class)
     @PutMapping("/")
     public Nota atualizaNota(@RequestBody Nota nota) {
+
         return notaRepository.save(nota);
     }
 

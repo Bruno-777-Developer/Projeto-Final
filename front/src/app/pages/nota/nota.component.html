@@ -7,7 +7,6 @@
       [visible]="isLoading">
     </dx-load-panel>
 
-
     <dx-data-grid #notaGrid
                   [showBorders]="true"
                   [(dataSource)]="listaNotas"
@@ -48,7 +47,6 @@
       <dxi-column dataField="data" dataType="date"></dxi-column>
       <dxi-column dataField="descricao" dataType="string"></dxi-column>
       <dxi-column dataField="itens" [visible]="false" editCellTemplate="gridEditTemplate"></dxi-column>
-
 
       <div *dxTemplate="let data of 'gridEditTemplate'">
         <!--        {{data | firstKeysToConsole}}-->

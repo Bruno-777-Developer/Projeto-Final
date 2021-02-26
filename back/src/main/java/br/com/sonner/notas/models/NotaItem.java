@@ -18,7 +18,7 @@ public class NotaItem implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY Para Gerar Valor Id Automático
-    private long id;
+    private Long id;
 
     @ManyToOne
     @JoinColumn(name="nota") // Relaciona com a Coluna Nota.
@@ -29,32 +29,32 @@ public class NotaItem implements Serializable {
 
     private String descricao;
 
-    private long quantidade;
+    private Long quantidade;
 
     private BigDecimal valorUnitario;
 
 
-    public long getId() { // Busca o Id do Nota Item
+    public Long getId() { // Busca o Id do Nota Item
         return id;
     }
 
-    public void setId(long id) { // Insere ou Atualiza o Id do Nota Item
+    public void setId(Long id) { // Insere ou Atualiza o Id do Nota Item
         this.id = id;
     }
 
-    public long getCodigo() { // Busca o Código do Nota Item
+    public Long getCodigo() { // Busca o Código do Nota Item
         return codigo;
     }
 
-    public void setCodigo(long codigo) { // Insere o Código
+    public void setCodigo(Long codigo) { // Insere o Código
         this.codigo = codigo;
     }
 
-    public long getQuantidade() {
+    public Long getQuantidade() {
         return quantidade;
     }
 
-    public void setQuantidade(long quantidade) {
+    public void setQuantidade(Long quantidade) {
         this.quantidade = quantidade;
     }
 
