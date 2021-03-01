@@ -32,7 +32,7 @@ public class NotaResources {
     public Nota salvaNota(@RequestBody Nota cadastronota) {
         return notaRepository.save(cadastronota);// Retorna uma nota cadastrada que foi salva
     }
-//    @ExceptionHandler(GenericJDBCException.class)
+    @ExceptionHandler
     @PutMapping("/")
     public Nota atualizaNota(@RequestBody Nota nota) {
 

@@ -1,7 +1,6 @@
 import {Injectable} from "@angular/core";
-import {HttpClient} from "@angular/common/http";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {Nota} from "../../model/nota";
-import {Contribuinte} from "../../model/contribuinte";
 import {Observable} from "rxjs";
 
 @Injectable({providedIn: 'root'})
@@ -9,7 +8,7 @@ export class NotaService {
 
   constructor(private httpClient: HttpClient) {}
 
-  listar(){
+  public listar(){
     return this.httpClient.get<Nota[]>('/api/nota/');
 
   }
@@ -17,17 +16,14 @@ export class NotaService {
     return this.httpClient.get<Nota>('/api/nota/' + id);
   }
 
-  criar(nota: Nota){
+  public criar(nota: Nota){
     return this.httpClient.post<Nota>('/api/nota/',nota);
   }
 
-  public atualizar(nota: Nota) {
-    const httpOptions: any = {
-      headers: {'Content-Type': 'application/json'}
-    };
-    httpOptions.body = nota;
-
-    return this.httpClient.put<Nota>('/api/nota/', httpOptions);
+  public atualizar(nota: Nota): Observable<Nota> {
+    let headers = new HttpHeaders();
+    headers = headers.set('Content-Type', 'application/json');
+    return this.httpClient.put<Nota>('/api/nota/', JSON.stringify(nota), {headers});
   }
 
   public deletar(nota: Nota) {

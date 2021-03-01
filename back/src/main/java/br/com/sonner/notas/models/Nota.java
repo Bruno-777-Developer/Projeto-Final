@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.HttpHeaders;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -13,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "nota")
-//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Nota implements Serializable {
 
     private static final Long serialVersionUID = 1L;
@@ -24,7 +25,6 @@ public class Nota implements Serializable {
 
     @ManyToOne // Relação de Muito para Um.
     @JoinColumn(name = "contribuinte") // Nome da tabela relacionada
-//    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
     private Contribuinte contribuinte; // Classe e o Objeto sempre próximos da Anotação
 
     private Long numero;
