@@ -24,6 +24,13 @@ public class NotaItem implements Serializable {
     @JsonIgnore
     private Nota nota; // nota da Classe Nota
 
+    //n:1 Muitos Itens podem ter 1 mesmo produto.
+    // Se fosse 1:1 um mesmo produto não poderia ser selecionado para outro item.
+    // Apesar de que apenas um item vai ter apenas 1 produto. Mas muitos itens podem ter o mesmo produto.
+    @ManyToOne
+    @JoinColumn(name = "produto")
+    private Produto produto;
+
     private long codigo;
 
     private String descricao;
@@ -79,6 +86,13 @@ public class NotaItem implements Serializable {
 
     public void setNota(Nota nota) {
         this.nota = nota;
+    }
+    public Produto getProduto() {
+        return produto;
+    }
+
+    public void setProduto(Produto produto) {
+        this.produto = produto;
     }
 }
 

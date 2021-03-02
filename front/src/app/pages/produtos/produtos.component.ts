@@ -30,7 +30,7 @@ export class ProdutosComponent implements OnInit {
 
   }
 
-  public buscaNotaId(id): void {
+  public buscaProdutoId(id): void {
     this.produto = new Produto();
     this.produtosService.listarId(id)
       .subscribe((produto: Produto) => {

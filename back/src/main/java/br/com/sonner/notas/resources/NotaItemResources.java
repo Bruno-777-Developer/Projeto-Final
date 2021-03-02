@@ -42,7 +42,7 @@ public class NotaItemResources {
     @PutMapping("/")
     public NotaItem atualizaNotaItem(@RequestBody NotaItem notaItem) {
         return notaItemRepository.save(notaItem);
-}
+    }
 
     @DeleteMapping("/")
     public void deletaNotaItem(@RequestBody NotaItem notaitem) {

@@ -4,6 +4,8 @@ import {Nota} from "../../model/nota";
 import {NotaItem} from "../../model/notaItem";
 import {NotaService} from "../../shared/services/nota.service";
 import {ContribuinteService} from "../../shared/services/contribuinte.service";
+import {ProdutosService} from "../../shared/services/produtos.service";
+import {Produto} from "../../model/produto";
 
 
 @Component({
@@ -13,6 +15,7 @@ import {ContribuinteService} from "../../shared/services/contribuinte.service";
 })
 export class NotaComponent implements OnInit {
 
+  listaProduto: Produto[] = [];
   listaContribuinte: Contribuinte[] = [];
   listaNotas: Nota[] = [];
   listaItens: NotaItem[] = [];
@@ -25,7 +28,8 @@ export class NotaComponent implements OnInit {
   isLoading = false;
 
   constructor(private notasService: NotaService,
-              private contribuinteService: ContribuinteService) {
+              private contribuinteService: ContribuinteService,
+              private produtosService: ProdutosService) {
     this.notaOnInitNewRow = this.notaOnInitNewRow.bind(this);
     this.notaOnEditingStart = this.notaOnEditingStart.bind(this);
     this.notaOnSaving = this.notaOnSaving.bind(this);
@@ -36,6 +40,14 @@ export class NotaComponent implements OnInit {
   ngOnInit(): void {
     this.buscaNotas();
     this.buscaContribuintes();
+    this.buscaProdutos();
+  }
+  public buscaProdutos(): void {
+    this.listaProduto = [];
+    this.produtosService.listar()
+      .subscribe((produto: Produto[]) => {
+        this.listaProduto = produto;
+      });
   }
 
   public buscaContribuintes(): void {
@@ -131,6 +143,7 @@ export class NotaComponent implements OnInit {
   notaOnSaved(event: any) {
     setTimeout(() => {
       this.changeNota = event.changes[0].data;
+      this.changeNota.itens.n
       this.notasService.merge(this.changeNota)
         .subscribe( retorno => {
         });

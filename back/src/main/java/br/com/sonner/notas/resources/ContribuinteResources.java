@@ -42,7 +42,7 @@ public class ContribuinteResources {
 
     @DeleteMapping("/")
     public void deletaContribuinte(@RequestBody Contribuinte contribuinte) {
-      contribuinteRepository.delete(contribuinte);
+        contribuinteRepository.delete(contribuinte);
         //http://localhost:8080/contribuinte/
     }
 

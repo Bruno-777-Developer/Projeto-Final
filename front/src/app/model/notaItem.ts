@@ -1,5 +1,6 @@
 import {Nota} from "./nota";
-import {ObjectLoop} from "../shared/core/object.loop";
+import {Produto} from "./produto";
+
 
 export class NotaItem{
 
@@ -9,4 +10,5 @@ export class NotaItem{
   descricao: string;
   quantidade: string;
   valorUnitario: number;
+  produto: Produto;
 }
