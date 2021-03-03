@@ -16,6 +16,7 @@ import {Produto} from "../../model/produto";
 export class NotaComponent implements OnInit {
 
   listaProduto: Produto[] = [];
+  produto: Produto;
   listaContribuinte: Contribuinte[] = [];
   listaNotas: Nota[] = [];
   listaItens: NotaItem[] = [];
@@ -42,6 +43,7 @@ export class NotaComponent implements OnInit {
     this.buscaContribuintes();
     this.buscaProdutos();
   }
+
   public buscaProdutos(): void {
     this.listaProduto = [];
     this.produtosService.listar()
@@ -68,17 +70,26 @@ export class NotaComponent implements OnInit {
 
   }
 
-/*
-  public buscaNotaId(id): void {
-    this.nota = null;
-    this.notasService.listarId(id)
-      .subscribe((nota: Nota) => {
-        this.nota = nota;
-        console.log(this.nota);
-      });
+  public setNota(): void {
 
+    if (this.listaItens.length > 0) {
+      this.changeNota.itens.forEach((n, m, o) => {
+        // this.changeNota.itens[m].nota = this.changeNota.id;
+      });
+    }
   }
-*/
+
+  /*
+    public buscaNotaId(id): void {
+      this.nota = null;
+      this.notasService.listarId(id)
+        .subscribe((nota: Nota) => {
+          this.nota = nota;
+          console.log(this.nota);
+        });
+
+    }
+  */
 
   public criar(nota): void {
     this.notasService.criar(nota)
@@ -93,17 +104,17 @@ export class NotaComponent implements OnInit {
       });
   }
 
-/*
-  public deletar(nota: Nota): void {
-    this.notasService.deletar(nota)
-      .subscribe(() => {
-        this.buscaNotas();
-        this.nota = null;
-        alert("Deletado com Sucesso!");
-        console.log(this.listaNotas);
-      });
-  }
-*/
+  /*
+    public deletar(nota: Nota): void {
+      this.notasService.deletar(nota)
+        .subscribe(() => {
+          this.buscaNotas();
+          this.nota = null;
+          alert("Deletado com Sucesso!");
+          console.log(this.listaNotas);
+        });
+    }
+  */
 
   notaOnInitNewRow(event: any) {
     event.data = new Nota();
@@ -113,7 +124,7 @@ export class NotaComponent implements OnInit {
   notaOnEditingStart(event: any) {
     this.changeNota = event.data;
     this.listaItens = [];
-    if(event.data.itens && event.data.itens.length){
+    if (event.data.itens && event.data.itens.length) {
       event.data.itens.forEach(item => {
         this.listaItens.push(Object.assign({}, item));
       });
@@ -123,19 +134,18 @@ export class NotaComponent implements OnInit {
 
   notaOnSaving(event: any) {
     setTimeout(() => {
-        if(this.changeItens && !event.changes.length && this.changeNota?.id) {
-          const nota: Nota = this.changeNota;
-          nota.itens = this.listaItens;
-          const change: Change<Nota> = new Change();
-          change.type = 'update';
-          change.key = this.changeNota.id;
-          change.data = nota;
-          event.changes.push(change);
-          event.setValue(this.changeNota);
-        }
-          else if(this.changeItens && event.changes.length){
-            event.changes[0].data.itens = this.listaItens;
-          }
+      if (this.changeItens && !event.changes.length && this.changeNota?.id) {
+        const nota: Nota = this.changeNota;
+        nota.itens = this.listaItens;
+        const change: Change<Nota> = new Change();
+        change.type = 'update';
+        change.key = this.changeNota.id;
+        change.data = nota;
+        event.changes.push(change);
+        event.setValue(this.changeNota);
+      } else if (this.changeItens && event.changes.length) {
+        event.changes[0].data.itens = this.listaItens;
+      }
       event.component.updateDimensions();
     }, 100);
   }
@@ -143,9 +153,9 @@ export class NotaComponent implements OnInit {
   notaOnSaved(event: any) {
     setTimeout(() => {
       this.changeNota = event.changes[0].data;
-      this.changeNota.itens.n
+      this.setNota();
       this.notasService.merge(this.changeNota)
-        .subscribe( retorno => {
+        .subscribe(retorno => {
         });
       // debugger;
     }, 110);

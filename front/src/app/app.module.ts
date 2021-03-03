@@ -8,13 +8,13 @@ import {UnauthenticatedContentModule} from './unauthenticated-content';
 import {AppRoutingModule} from './app-routing.module';
 import {HttpClientModule} from '@angular/common/http';
 import {
-  DxButtonModule,
-  DxDataGridModule,
-  DxFormModule,
-  DxLoadPanelModule,
-  DxSelectBoxModule,
-  DxTextAreaModule,
-  DxTextBoxModule
+    DxButtonModule,
+    DxDataGridModule, DxDropDownBoxModule,
+    DxFormModule,
+    DxLoadPanelModule,
+    DxSelectBoxModule,
+    DxTextAreaModule,
+    DxTextBoxModule
 } from 'devextreme-angular';
 import {HomeComponent} from './pages/home/home.component';
 import {ProfileComponent} from './pages/profile/profile.component';
@@ -37,24 +37,25 @@ import {NotaComponent} from "./pages/nota/nota.component";
     ContribuinteComponent,
     FirstKeysToConsolePipe
   ],
-  imports: [
-    BrowserModule,
-    SideNavOuterToolbarModule,
-    SideNavInnerToolbarModule,
-    SingleCardModule,
-    FooterModule,
-    HttpClientModule,
-    LoginFormModule,
-    UnauthenticatedContentModule,
-    AppRoutingModule,
-    DxSelectBoxModule,
-    DxDataGridModule,
-    DxFormModule,
-    DxButtonModule,
-    DxTextBoxModule,
-    DxTextAreaModule,
-    DxLoadPanelModule
-  ],
+    imports: [
+        BrowserModule,
+        SideNavOuterToolbarModule,
+        SideNavInnerToolbarModule,
+        SingleCardModule,
+        FooterModule,
+        HttpClientModule,
+        LoginFormModule,
+        UnauthenticatedContentModule,
+        AppRoutingModule,
+        DxSelectBoxModule,
+        DxDataGridModule,
+        DxFormModule,
+        DxButtonModule,
+        DxTextBoxModule,
+        DxTextAreaModule,
+        DxLoadPanelModule,
+        DxDropDownBoxModule
+    ],
   providers: [
     AuthService,
     ScreenService,

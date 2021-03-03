@@ -87,6 +87,7 @@ public class NotaItem implements Serializable {
     public void setNota(Nota nota) {
         this.nota = nota;
     }
+
     public Produto getProduto() {
         return produto;
     }
