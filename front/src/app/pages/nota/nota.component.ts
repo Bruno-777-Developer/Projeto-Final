@@ -70,15 +70,6 @@ export class NotaComponent implements OnInit {
 
   }
 
-  public setNota(): void {
-
-    if (this.listaItens.length > 0) {
-      this.changeNota.itens.forEach((n, m, o) => {
-        // this.changeNota.itens[m].nota = this.changeNota.id;
-      });
-    }
-  }
-
   /*
     public buscaNotaId(id): void {
       this.nota = null;
@@ -134,30 +125,46 @@ export class NotaComponent implements OnInit {
 
   notaOnSaving(event: any) {
     setTimeout(() => {
+      // this.changeNota = JSON.parse(JSON.stringify(event));
       if (this.changeItens && !event.changes.length && this.changeNota?.id) {
         const nota: Nota = this.changeNota;
         nota.itens = this.listaItens;
-        const change: Change<Nota> = new Change();
+
+        let change: Change<Nota> = new Change();
         change.type = 'update';
         change.key = this.changeNota.id;
         change.data = nota;
+
         event.changes.push(change);
-        event.setValue(this.changeNota);
       } else if (this.changeItens && event.changes.length) {
         event.changes[0].data.itens = this.listaItens;
       }
+
+      if (event.changes.length && event.changes[0].data.itens && event.changes[0].data.itens.length) {
+        event.changes[0].data.itens.forEach(item => {
+          if(item.produto?.id) {
+            const idProduto = item.produto.id;
+            item.produto = this.listaProduto.find(item => item.id === idProduto);
+          }
+          // item.nota = event.changes[0].data;
+        });
+      }
+
+      // event.changes[0].data.itens[0].nota = {id: 1, numero: null, contribuinte: {id: 2}, data: null, descricao: null, itens: [] };
+      event.setValue(event.changes[0].data);
       event.component.updateDimensions();
     }, 100);
   }
 
   notaOnSaved(event: any) {
     setTimeout(() => {
-      this.changeNota = event.changes[0].data;
-      this.setNota();
-      this.notasService.merge(this.changeNota)
-        .subscribe(retorno => {
-        });
-      // debugger;
+      if(event.changes && event.changes.length) {
+
+        this.changeNota = event.changes[0].data;
+        this.notasService.merge(this.changeNota)
+          .subscribe(retorno => {
+          });
+      }
     }, 110);
   }
 
@@ -168,6 +175,8 @@ export class NotaComponent implements OnInit {
   itemOnValueChanged(event, data) {
     data.setValue(this.listaContribuinte.find(item => item.id === event.value));
   }
+
+
 }
 
 export class Change<T> {

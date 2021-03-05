@@ -36,7 +36,7 @@
             <dxi-item dataField="contribuinte"></dxi-item>
             <dxi-item dataField="data"></dxi-item>
             <dxi-item dataField="descricao"></dxi-item>
-            <dxi-item dataField="produto"></dxi-item>
+
           </dxi-item>
           <dxi-item itemType="group" [colCount]="2" [colSpan]="2">
           <dxi-item dataField="itens" [colSpan]="2"></dxi-item>
@@ -49,11 +49,9 @@
       <dxi-column dataField="contribuinte" cellTemplate="contribuinteCellTemplate" editCellTemplate="contribuinteEditCellTemplate"></dxi-column>
       <dxi-column dataField="data" dataType="date"></dxi-column>
       <dxi-column dataField="descricao" dataType="string"></dxi-column>
-      <dxi-column dataField="produto" [visible]="false" cellTemplate="produtoCellTemplate" editCellTemplate="produtoEditCellTemplate"></dxi-column>
       <dxi-column dataField="itens" [visible]="false" editCellTemplate="gridEditTemplate"></dxi-column>
 
       <div *dxTemplate="let data of 'gridEditTemplate'">
-        <!--        {{data | firstKeysToConsole}}-->
         <dx-data-grid #itemGrid
                       width="100%"
                       showBorders="true"
@@ -68,20 +66,7 @@
           </dxo-editing>
 
           <dxi-column dataField="codigo" caption="Codigo" width="85"></dxi-column>
-<!--          <dxi-column-->
-<!--            dataField="produto"-->
-<!--            [width]="150"-->
-<!--            [allowSorting]="false"-->
-<!--            editCellTemplate="singleDropDownBoxEditor"-->
-<!--          >-->
-<!--            <dxo-lookup-->
-<!--              [dataSource]="listaProduto"-->
-<!--              displayExpr="nome"-->
-<!--              valueExpr="id">-->
-<!--            </dxo-lookup>-->
-<!--&lt;!&ndash;            <dxi-validation-rule type="required"></dxi-validation-rule>&ndash;&gt;-->
-<!--          </dxi-column>-->
-          <dxi-column dataField="produto"
+          <dxi-column dataField="produto.id"
                       caption="produto"
                       [width]="125">
             <dxo-lookup [dataSource]="listaProduto"
@@ -110,46 +95,6 @@
         </dx-select-box>
       </div>
 
-      <div *dxTemplate="let data of 'produtoCellTemplate'">
-        {{data.value && data.value.nome ? data.value.nome : ""}}
-      </div>
-
-      <div *dxTemplate="let data of 'produtoEditCellTemplate'">
-        <dx-select-box [(items)]="listaProduto"
-                       [value]="data.value?.id"
-                       valueExpr="id"
-                       (onValueChanged)="itemOnValueChanged($event, data)"
-                       displayExpr="nome">
-        </dx-select-box>
-      </div>
-
-<!--      <div *dxTemplate="let cellInfo of 'singleDropDownBoxEditor'">-->
-<!--        <dx-drop-down-box-->
-<!--          [dataSource]="listaProduto"-->
-<!--          [(value)]="cellInfo.value"-->
-<!--          displayExpr="nome"-->
-<!--          valueExpr="id"-->
-<!--          contentTemplate="contentTemplate">-->
-<!--          <div *dxTemplate="let e of 'contentTemplate'">-->
-<!--            <dx-data-grid-->
-<!--              [dataSource]="listaProduto"-->
-<!--              [remoteOperations]="true"-->
-<!--              [height]="250"-->
-<!--              [focusedRowEnabled]="true"-->
-<!--              [focusedRowKey]="cellInfo.value"-->
-<!--              [hoverStateEnabled]="true"-->
-<!--              (onSelectionChanged)="onSelectionChanged($event, cellInfo, e.component)"-->
-<!--            >-->
-<!--              <dxi-column dataField="nome"></dxi-column>-->
-<!--              <dxi-column dataField="preco"></dxi-column>-->
-<!--              <dxi-column dataField="validade"></dxi-column>-->
-<!--              <dxo-paging [enabled]="true" [pageSize]="10"></dxo-paging>-->
-<!--              <dxo-scrolling mode="virtual"></dxo-scrolling>-->
-<!--              <dxo-selection mode="single" ></dxo-selection>-->
-<!--            </dx-data-grid>-->
-<!--          </div>-->
-<!--        </dx-drop-down-box>-->
-<!--      </div>-->
     </dx-data-grid>
   </div>
 
