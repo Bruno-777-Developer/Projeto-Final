@@ -163,9 +163,11 @@ export class NotaComponent implements OnInit {
         this.changeNota = event.changes[0].data;
         this.notasService.merge(this.changeNota)
           .subscribe(retorno => {
+
           });
+
       }
-    }, 110);
+    }, 500);
   }
 
   itemOnSaved(event) {

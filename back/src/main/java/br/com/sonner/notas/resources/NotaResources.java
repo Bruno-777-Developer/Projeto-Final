@@ -37,8 +37,11 @@ public class NotaResources {
 
     @PutMapping("/")
     public Nota atualizaNota(@RequestBody Nota nota) {
-
-        return notaRepository.save(nota);
+        for (NotaItem item : nota.getItens()) {
+            item.setNota( nota );
+        }
+        nota = notaRepository.save(nota);
+        return nota;
     }
 
     @DeleteMapping("/")
