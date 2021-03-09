@@ -24,7 +24,8 @@ export class NotaComponent implements OnInit {
   // notaTypeRef: any = NotaItem;
   changeItens = false;
   changeNota: Nota;
-
+  nota: Nota;
+  codigo: number;
 
   isLoading = false;
 
@@ -60,7 +61,16 @@ export class NotaComponent implements OnInit {
       });
 
   }
+  public reparaNotas(): void {
 
+  this.listaNotas.forEach( nota => {nota.itens.filter(item => {
+    let codigoAnterior;
+    let codigoAtual;
+    codigoAtual = item.codigo;
+
+  })})
+
+      }
   public buscaNotas(): void {
     this.listaNotas = [];
     this.notasService.listar()
@@ -130,6 +140,7 @@ export class NotaComponent implements OnInit {
         const nota: Nota = this.changeNota;
         nota.itens = this.listaItens;
 
+
         let change: Change<Nota> = new Change();
         change.type = 'update';
         change.key = this.changeNota.id;
@@ -161,17 +172,23 @@ export class NotaComponent implements OnInit {
       if(event.changes && event.changes.length) {
 
         this.changeNota = event.changes[0].data;
+
         this.notasService.merge(this.changeNota)
           .subscribe(retorno => {
-
+            // event.setValue(retorno);
+            this.nota = this.listaNotas.find(nota => nota.id === retorno.id);
+            this.listaNotas = this.listaNotas.filter(nota =>  { if(nota.id != this.nota.id) return nota;});
+            this.listaNotas.push(retorno);
+            // this.buscaNotas();
           });
-
       }
     }, 500);
   }
 
   itemOnSaved(event) {
     this.changeItens = true;
+    // this.codigo = event.changes[0].data.codigo;
+    // this.changeNota.itens.find( item => { item.codigo === this.codigo });
   }
 
   itemOnValueChanged(event, data) {

@@ -3,9 +3,7 @@ package br.com.sonner.notas.resources;
 import br.com.sonner.notas.models.Nota;
 import br.com.sonner.notas.models.NotaItem;
 import br.com.sonner.notas.repository.NotaRepository;
-import org.hibernate.exception.GenericJDBCException;
 import org.springframework.web.bind.annotation.*;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController // Classe API REST e vai receber a requisições http.
