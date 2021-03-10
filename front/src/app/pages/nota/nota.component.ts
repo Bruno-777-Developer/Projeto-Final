@@ -177,7 +177,8 @@ export class NotaComponent implements OnInit {
           .subscribe(retorno => {
             // event.setValue(retorno);
             this.nota = this.listaNotas.find(nota => nota.id === retorno.id);
-            this.listaNotas = this.listaNotas.filter(nota =>  { if(nota.id != this.nota.id) return nota;});
+            this.listaNotas = this.listaNotas.filter(nota =>  {
+              if(nota.id !== this.nota.id) return nota;});
             this.listaNotas.push(retorno);
             // this.buscaNotas();
           });
