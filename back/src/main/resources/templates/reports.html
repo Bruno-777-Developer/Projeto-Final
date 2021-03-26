@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="pt" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>-RELATÓRIOS-</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+</head>
+<body>
+<h1> - RELATÓRIOS - </h1>
+
+<h2> - RELATÓRIO GERAL - </h2>
+<a th:href="@{/relatorio/pdf/jr1(code='10', acao ='v')}"> Abrir </a> <br>
+<a th:href="@{/relatorio/pdf/jr1(code='10', acao ='d')}"> Download </a>
+
+<hr>
+
+<div>
+    <h2> BUSCAR POR CONTRIBUINTE</h2>
+    <form th:action="@{/relatorio/pdf/jr11/11}" method="get">
+        <select id="nome" name="nome">
+            <option value=""> - Selecione o CONTRIBUINTE -</option>
+            <option th:each="nome : ${nomes}" th:value="${nome}" th:text="${nome}"> Selecione o CONTRIBUINTE</option>
+        </select>
+        <button type="submit"> Buscar</button>
+    </form>
+</div>
+</body>
+</html>

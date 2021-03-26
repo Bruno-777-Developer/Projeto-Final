@@ -10,20 +10,19 @@ import java.sql.Connection;
 
     @Controller
     public class HomeController {
-//
-//        @Autowired
-//        private Connection connection;
-//
-//
-//        @GetMapping("/home/")
-//        public String index() {
-//            return "index";
-//        }
-//
-//        @GetMapping("/conn/")
-//        public String myConn(Model model) {
-//            model.addAttribute("conn", connection != null? "Conexão Ok!!":"Ops... Sem Conexão");
-//            return "index";
-//        }
+
+        @Autowired
+        private Connection connection;
+
+        @GetMapping("/")
+        public String index() {
+            return "index";
+        }
+
+        @GetMapping("/conn/")
+        public String myConn(Model model) {
+            model.addAttribute("conn", connection != null? "Conexão Ok!!":"Ops... Sem Conexão");
+            return "index";
+        }
 
 }

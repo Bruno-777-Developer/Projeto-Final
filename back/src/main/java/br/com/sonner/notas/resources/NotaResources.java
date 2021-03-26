@@ -1,13 +1,8 @@
 package br.com.sonner.notas.resources;
-
 import br.com.sonner.notas.models.Nota;
 import br.com.sonner.notas.models.NotaItem;
 import br.com.sonner.notas.repository.NotaRepository;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-
-import java.sql.Connection;
 import java.util.List;
 
 @RestController // Classe API REST e vai receber a requisições http.
@@ -20,19 +15,6 @@ public class NotaResources {
         this.notaRepository = notaRepository;
     }
 
-    @Autowired
-    private Connection connection;
-
-    @GetMapping("/home/")
-        public String index() {
-        return "index";
-        }
-
-    @GetMapping("/conn/")
-    public String myConn(Model model) {
-        model.addAttribute("conn", connection != null? "Conexão Ok!!":"Ops... Sem Conexão");
-        return "index";
-    }
 
     @GetMapping("/") // Método que lista todos os produtos salvos no Banco de Dados
     public List<Nota> listaNotas() {
