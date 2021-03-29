@@ -23,7 +23,7 @@ public class Nota implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne // Relação de Muito para Um.
+    @ManyToOne// Relação de Muito para Um.
     @JoinColumn(name = "contribuinte") // Nome da tabela relacionada
     private Contribuinte contribuinte; // Classe e o Objeto sempre próximos da Anotação
 

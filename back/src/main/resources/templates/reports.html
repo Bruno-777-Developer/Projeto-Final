@@ -17,7 +17,7 @@
 
 <div>
     <h2> BUSCAR POR CONTRIBUINTE</h2>
-    <form th:action="@{/relatorio/pdf/jr11/11}" method="get">
+    <form th:action="@{/relatorio/pdf/jr11/12}" method="get">
         <select id="nome" name="nome">
             <option value=""> - Selecione o CONTRIBUINTE -</option>
             <option th:each="nome : ${nomes}" th:value="${nome}" th:text="${nome}"> Selecione o CONTRIBUINTE</option>

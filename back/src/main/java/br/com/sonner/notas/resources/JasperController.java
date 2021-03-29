@@ -47,7 +47,7 @@ public class JasperController {
                                   @RequestParam(name = "nome", required = false) String nome,
                                   HttpServletResponse response) throws IOException {
         service.addParams("NOME", nome.isEmpty() ? null: nome);
-        byte[] bytes = service.exportarPDF(code);
+        byte[] bytes = service.exportarPDF2(code);
         response.setContentType(MediaType.APPLICATION_PDF_VALUE);
         response.setHeader("content-disposition", "inline; filename=relatorio-" + code + ".pdf");
         response.getOutputStream().write(bytes);

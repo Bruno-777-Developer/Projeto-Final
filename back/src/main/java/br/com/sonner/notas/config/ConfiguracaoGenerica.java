@@ -1,5 +1,6 @@
 package br.com.sonner.notas.config;
 
+import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
