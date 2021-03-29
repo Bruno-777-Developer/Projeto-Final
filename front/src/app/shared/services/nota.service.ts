@@ -24,8 +24,9 @@ export class NotaService {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
     return this.httpClient.put<Nota>('/api/nota/', JSON.stringify(nota), {headers});
+  }
 
-  public atualizar(nota: Nota): Observable<Nota> {
+  public atualizar2(nota: Nota): Observable<Nota> {
     let headers = new HttpHeaders();
     headers = headers.set('Content-Type', 'application/json');
 
