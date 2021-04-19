@@ -1,11 +1,8 @@
 package br.com.sonner.notas.models;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.http.HttpHeaders;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -28,7 +25,6 @@ public class Nota implements Serializable {
     private Contribuinte contribuinte; // Classe e o Objeto sempre próximos da Anotação
 
     private Long numero;
-
     private String descricao;
 
     @DateTimeFormat(pattern = "dd/MM/yyyy")

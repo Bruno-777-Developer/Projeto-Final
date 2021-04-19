@@ -26,8 +26,8 @@ public class JasperService {
     private static final String JASPER_PREFIXO = "notas-";
     private static final String JASPER_SUFIXO = ".jasper";
 
-//    @Autowired
-//    private Connection connection;
+
+    private Connection connection;
 
     @Autowired
     NotaRepository notaRepository;
@@ -46,7 +46,7 @@ public class JasperService {
 
 
         byte[] bytes = null;
-/*
+
         try {
             File file = ResourceUtils.getFile(JASPER_DIRETÓRIO.concat(JASPER_PREFIXO).concat(code).concat(JASPER_SUFIXO));
             JasperPrint print = JasperFillManager.fillReport(file.getAbsolutePath(), params, connection);
@@ -54,7 +54,7 @@ public class JasperService {
         } catch (FileNotFoundException | JRException e) {
             e.printStackTrace();
         }
-*/
+
         return bytes;
     }
 

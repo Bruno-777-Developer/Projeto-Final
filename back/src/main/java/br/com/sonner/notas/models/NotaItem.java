@@ -2,6 +2,8 @@ package br.com.sonner.notas.models;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import jdk.nashorn.internal.objects.annotations.Getter;
+import jdk.nashorn.internal.objects.annotations.Setter;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,9 +19,9 @@ public class NotaItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY Para Gerar Valor Id Automático
     private Long id;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="nota") // Relaciona com a Coluna Nota.
-    @JsonIgnore
     private Nota nota; // nota da Classe Nota
 
     //n:1 Muitos Itens podem ter 1 mesmo produto.
@@ -29,7 +31,7 @@ public class NotaItem implements Serializable {
     @JoinColumn(name = "produto")
     private Produto produto;
 
-    private long codigo;
+    private Long codigo;
 
     private String descricao;
 
