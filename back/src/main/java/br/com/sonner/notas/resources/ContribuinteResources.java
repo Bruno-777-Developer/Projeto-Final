@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController // Classe API REST e vai receber a requisições http.
-@RequestMapping(value = "/contribuinte") // URI Padrão para a API
+@RequestMapping(value = "/cliente") // URI Padrão para a API
 public class ContribuinteResources {
     final // para utilizar os métodos para se conectar com o Banco de Dados.
     ContribuinteRepository contribuinteRepository;

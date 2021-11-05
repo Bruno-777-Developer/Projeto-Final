@@ -52,6 +52,7 @@
       <dxi-column dataField="itens" [visible]="false" editCellTemplate="gridEditTemplate"></dxi-column>
 
       <div *dxTemplate="let data of 'gridEditTemplate'">
+        {{data|firstKeysToConsole}}
         <dx-data-grid #itemGrid
                       width="100%"
                       showBorders="true"

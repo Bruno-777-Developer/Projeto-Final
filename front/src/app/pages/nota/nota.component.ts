@@ -117,6 +117,12 @@ export class NotaComponent implements OnInit {
     }
   */
 
+  /**
+   * *****************************************************
+   * Olhar o exemplo do devExtreme "Edit State Management"
+   * *****************************************************
+   */
+
   notaOnInitNewRow(event: any) {
     event.data = new Nota();
     this.changeItens = false;

@@ -30,7 +30,8 @@ public class NotaResources {
 
     @PostMapping("/") // Recebe um produto para salvar - O Produto vem no corpo da requisição. @RequestBody
     public Nota salvaNota(@RequestBody Nota cadastronota) {
-        return notaRepository.save(cadastronota);// Retorna uma nota cadastrada que foi salva
+        Nota n = notaRepository.save(cadastronota);// Retorna uma nota cadastrada que foi salva
+        return n;
     }
 
     @PutMapping("/")

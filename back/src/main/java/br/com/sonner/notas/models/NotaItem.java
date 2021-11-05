@@ -19,7 +19,7 @@ public class NotaItem implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY) // IDENTITY Para Gerar Valor Id Automático
     private Long id;
 
-    @JsonIgnore
+//    @JsonIgnore
     @ManyToOne
     @JoinColumn(name="nota") // Relaciona com a Coluna Nota.
     private Nota nota; // nota da Classe Nota

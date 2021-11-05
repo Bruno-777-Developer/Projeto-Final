@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController // Classe API REST e vai receber a requisições http.
-@RequestMapping(value = "/notaitem") // URI Padrão para a API
+@RequestMapping(value = "/itensnota") // URI Padrão para a API
 public class NotaItemResources {
 
     final NotaItemRepository notaItemRepository;

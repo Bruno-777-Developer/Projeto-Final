@@ -34,7 +34,8 @@ public class Nota implements Serializable {
     private List<NotaItem> itens; // Relação de Um para Muitos. Mapeado a partir da Tabela Nota
     // Em Cascata. Buscar do Tipo Preguiçoso.
 
-    public long getId() {
+
+    public Long getId() {
         return id;
     }
 
